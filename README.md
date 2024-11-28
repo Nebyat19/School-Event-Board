@@ -28,7 +28,7 @@ The **School Event Board** is a platform designed to streamline the management a
 
 ---
 
-## 🏗️ Architecture Overview
+## 🏗️ Architectural Overview
 
 The backend is composed of three core microservices:
 
