@@ -1,0 +1,38 @@
+version: '3.9'
+services:
+  event-service:
+    build: ./services/event-service
+    ports:
+      - '8001:8000'
+    environment:
+      - DATABASE_URL=\
+    depends_on:
+      - db
+  user-service:
+    build: ./services/user-service
+    ports:
+      - '8002:8000'
+    environment:
+      - DATABASE_URL=\
+    depends_on:
+      - db
+  notification-service:
+    build: ./services/notification-service
+    ports:
+      - '8003:8000'
+    environment:
+      - DATABASE_URL=\
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
