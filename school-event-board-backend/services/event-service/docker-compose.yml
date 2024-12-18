@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  event-service:
+    build: .
+    ports:
+      - '8001:8001'
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq
+    depends_on:
+      - rabbitmq
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
