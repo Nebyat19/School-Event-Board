@@ -1,23 +1,18 @@
 const amqp = require('amqplib');
 
-let channel, connection;
+const RABBITMQ_HOST = process.env.RABBITMQ_HOST || 'rabbitmq';
+const RABBITMQ_PORT = process.env.RABBITMQ_PORT || 5672;
 
-async function connectToRabbitMQ() {
+const connectRabbitMQ = async () => {
     try {
-        connection = await amqp.connect(process.env.RABBITMQ_URL);
-        channel = await connection.createChannel();
+        const connection = await amqp.connect(`amqp://${RABBITMQ_HOST}:${RABBITMQ_PORT}`);
         console.log('Connected to RabbitMQ');
+        return connection;
     } catch (error) {
-        console.error('RabbitMQ connection error:', error);
-        process.exit(1);
+        console.error('RabbitMQ connection failed:', error);
+        throw error;
     }
-}
 
-async function publishMessage(queue, message) {
-    if (!channel) throw new Error('RabbitMQ channel not initialized');
-    await channel.assertQueue(queue);
-    channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
-    console.log(`Message sent to queue ${queue}`);
-}
+};
 
-module.exports = { connectToRabbitMQ, publishMessage };
+module.exports = connectRabbitMQ;
