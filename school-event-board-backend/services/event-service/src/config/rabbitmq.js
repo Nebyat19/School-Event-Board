@@ -9,7 +9,7 @@ const connectRabbitMQ = async () => {
         console.log('Connected to RabbitMQ server');
         return connection;
     } catch (error) {
-        console.error('RabbitMQ connection failed:', error);
+        console.error('RabbitMQ connection  to server failed:', error);
         throw error;
     }
 
