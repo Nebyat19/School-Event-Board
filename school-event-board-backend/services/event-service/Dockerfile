@@ -1,12 +1,16 @@
-# Dockerfile for event-service
-FROM python:3.9-slim
+FROM node:16
 
-WORKDIR /app
+# Create app directory
+WORKDIR /usr/src/app
 
-COPY requirements.txt .
+# Install app dependencies
+COPY package*.json ./
+RUN npm install
 
-RUN pip install --no-cache-dir -r requirements.txt
-
+# Bundle app source
 COPY . .
 
-CMD ["uvicorn", "src.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Expose port
+EXPOSE 8001
+
+CMD ["npm", "start"]

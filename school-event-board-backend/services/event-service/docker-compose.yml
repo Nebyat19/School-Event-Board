@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  event-service:
+    build: .
+    ports:
+      - "8001:8001"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=event_service
+      - DB_PASSWORD=eventService123
+      - DB_NAME=event_db
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: event_service
+      POSTGRES_PASSWORD: eventService123
+      POSTGRES_DB: event_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  postgres_data:
