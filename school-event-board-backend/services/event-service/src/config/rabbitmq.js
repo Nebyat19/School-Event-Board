@@ -6,7 +6,7 @@ const RABBITMQ_PORT = process.env.RABBITMQ_PORT || 5672;
 const connectRabbitMQ = async () => {
     try {
         const connection = await amqp.connect(`amqp://${RABBITMQ_HOST}:${RABBITMQ_PORT}`);
-        console.log('Connected to RabbitMQ');
+        console.log('Connected to RabbitMQ server');
         return connection;
     } catch (error) {
         console.error('RabbitMQ connection failed:', error);
