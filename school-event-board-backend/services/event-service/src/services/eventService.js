@@ -14,4 +14,19 @@ const sendEventMessage = async (message) => {
   }
 };
 
-module.exports = { sendEventMessage };
+//read from the queue
+const receiveEventMessage = async () => {
+  const channel = await connectRabbitMQ();
+  if (channel) {
+    const queue = 'event_queue';
+
+    channel.consume(queue, (message) => {
+      console.log('Message received from RabbitMQ:', message.content.toString());
+    });
+  }
+  else{
+    throw new Error('Failed to receive message from RabbitMQ');
+  }
+};
+
+module.exports = { sendEventMessage, receiveEventMessage };
